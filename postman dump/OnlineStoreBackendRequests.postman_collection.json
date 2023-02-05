@@ -1,0 +1,56 @@
+{
+	"info": {
+		"_postman_id": "bd8b81f6-c002-495c-b542-fbba74066fd5",
+		"name": "OnlineStoreBackendRequests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Lessons",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/lessons",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"lessons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Place Order",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"jaspreet\",\r\n    \"phone\": \"123456789\",\r\n    \"lesson_id\": \"63df522689ae20166c5a09f7\",\r\n    \"spaces\": \"3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://handsome-fox-hosiery.cyclic.app/orders",
+					"protocol": "https",
+					"host": [
+						"handsome-fox-hosiery",
+						"cyclic",
+						"app"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
