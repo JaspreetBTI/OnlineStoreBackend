@@ -49,6 +49,22 @@ app.get("/images/:imageName", (req, res) => {
 const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
 let mydb = client.db(dbName);
 
+// REST API POINTS START
+app.param("collection", function (req, res, next, collection) {
+  req.collection = mydb.collection(collection);
+  return next();
+});
+
+// GET COLLECTION API
+app.get("/:collection", function (req, res, next) {
+  req.collection.find({}).toArray(function (err, results) {
+    if (err) {
+      return next(err);
+    }
+    res.json(results);
+  });
+});
+
 
 //start server
 app.listen(5000, () => {
