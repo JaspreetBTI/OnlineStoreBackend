@@ -65,6 +65,25 @@ app.get("/:collection", function (req, res, next) {
   });
 });
 
+// CREATE NEW ORDER REST API POINT
+app.post("/orders", (req, res) => {
+  mydb.collection("orders").insertOne(
+    {
+      name: req.body.name,
+      phone: req.body.phone,
+      lesson_id: req.body.lesson_id,
+      spaces: req.body.spaces,
+    },
+    (error) => {
+      if (error) {
+        console.log(error);
+        res.status(500).send({ message: "Error saving order" });
+      } else {
+        res.status(201).send({ message: "Order placed successfully" });
+      }
+    }
+  );
+});
 
 //start server
 app.listen(5000, () => {
