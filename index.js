@@ -66,27 +66,33 @@ app.get("/:collection", function (req, res, next) {
 });
 
 // CREATE NEW ORDER REST API POINT
-app.post("/orders", (req, res) => {
-  mydb.collection("orders").insertOne(
-    {
-      name: req.body.name,
-      phone: req.body.phone,
-      lesson_id: req.body.lesson_id,
-      spaces: req.body.spaces,
-    },
-    (error) => {
-      if (error) {
-        console.log(error);
-        res.status(500).send({ message: "Error saving order" });
-      } else {
-        res.status(201).send({ message: "Order placed successfully" });
-      }
+app.post("/:collection", (req, res) => {
+  req.collection.insertOne(req.body, (error) => {
+    if (error) {
+      console.log(error);
+      res.status(500).send({ message: "Error saving order" });
+    } else {
+      res.status(201).send({ message: "Order placed successfully" });
     }
-  );
+  });
+});
+// CREATE UPDATE LESSONS SPACE API
+app.put("/:collection/:id", function (req, res, next) {
+  console.log(req.body);
+  var myquery = { _id: new ObjectId(req.params.id) };
+  var newvalues = { $set: { space: req.body.avl } };
+  req.collection.updateOne(myquery, newvalues, function (err, result) {
+    if (err) {
+      return next(err);
+    }
+    result.matchedCount === 1
+      ? res.status(201).send({ message: "Updated successfully" })
+      : res.status(500).send({ message: "Error saving data" });
+  });
+
 });
 
 //start server
 app.listen(5000, () => {
-    console.log("Server started on http://localhost:5000");
-  });
-  
+  console.log("Server started on http://localhost:5000");
+});
