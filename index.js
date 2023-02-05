@@ -89,9 +89,10 @@ app.put("/:collection/:id", function (req, res, next) {
       ? res.status(201).send({ message: "Updated successfully" })
       : res.status(500).send({ message: "Error saving data" });
   });
-
 });
-
+app.get("/", function (req, res, next) {
+  return res.send({ message: "Home Page" });
+});
 //start server
 app.listen(5000, () => {
   console.log("Server started on http://localhost:5000");
