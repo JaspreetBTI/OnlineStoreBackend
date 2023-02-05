@@ -79,9 +79,9 @@ app.post("/:collection", (req, res) => {
 // CREATE UPDATE LESSONS SPACE API
 app.put("/:collection/:id", function (req, res, next) {
   console.log(req.body);
-  var myquery = { _id: new ObjectId(req.params.id) };
-  var newvalues = { $set: { space: req.body.avl } };
-  req.collection.updateOne(myquery, newvalues, function (err, result) {
+  var searchQuery = { _id: new ObjectId(req.params.id) };
+  var newvalues = { $set: req.body };
+  req.collection.updateOne(searchQuery, newvalues, function (err, result) {
     if (err) {
       return next(err);
     }
