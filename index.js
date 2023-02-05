@@ -27,6 +27,29 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(morgan("short"));
 
+// CREATING MIDDLEWARES
+const middleware_logger = (req, res, next) => {
+  console.log(`A ${req.method} request received at ${req.url}`);
+  next();
+};
+app.use(middleware_logger);
+
+app.use("/images", express.static(path.join(__dirname, "images")));
+app.get("/images/:imageName", (req, res) => {
+  const imageName = req.params.imageName;
+  const imagePath = path.join(__dirname, "images", imageName);
+  res.sendFile(imagePath, (err) => {
+    if (err) {
+      res.status(404).send("Image not found");
+    }
+  });
+});
+
+// Connecting TO Database
+const client = new MongoClient(uri, { serverApi: ServerApiVersion.v1 });
+let mydb = client.db(dbName);
+
+
 //start server
 app.listen(5000, () => {
     console.log("Server started on http://localhost:5000");
